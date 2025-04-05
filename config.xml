@@ -197,7 +197,7 @@
 
     <!-- Allow multiple servers to listen on the same address:port. This is not recommended.
       -->
-    <!-- <listen_reuse_port>0</listen_reuse_port> -->
+    <listen_reuse_port>0</listen_reuse_port>
 
     <!-- <listen_backlog>4096</listen_backlog> -->
 
