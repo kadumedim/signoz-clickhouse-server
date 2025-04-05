@@ -7,19 +7,21 @@
         </node>
     </zookeeper>
 
-    <!-- <remote_servers>
+   <remote_servers>
         <cluster>
             <shard>
+                <internal_replication>true</internal_replication>
                 <replica>
                     <host>${CLICKHOUSE_HOST}</host>
                     <port>${CLICKHOUSE_PORT}</port>
                 </replica>
             </shard>
         </cluster>
-    </remote_servers> -->
+    </remote_servers>
     
     <distributed_ddl>
         <path>/clickhouse/task_queue/ddl</path>
         <task_max_lifetime>600</task_max_lifetime>
+        <pool_size>1</pool_size>
     </distributed_ddl>
 </clickhouse>
