@@ -26,9 +26,10 @@
         <formatting>
             <type>json</type>
         </formatting>
-        <log>/var/log/clickhouse-server/clickhouse-server.log</log>
+        <console>1</console>
+       <!--  <log>/var/log/clickhouse-server/clickhouse-server.log</log>
         <errorlog>/var/log/clickhouse-server/clickhouse-server.err.log</errorlog>
-        <!-- Rotation policy
+         --><!-- Rotation policy
              See https://github.com/pocoproject/poco/blob/poco-1.9.4-release/Foundation/include/Poco/FileChannel.h#L54-L85
           -->
         <size>1000M</size>
