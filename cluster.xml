@@ -11,10 +11,15 @@
         <cluster>
             <shard>
                 <replica>
-                    <host>clickhouse</host>
-                    <port>9000</port>
+                    <host>${CLICKHOUSE_HOST}</host>
+                    <port>${CLICKHOUSE_PORT}</port>
                 </replica>
             </shard>
         </cluster>
     </remote_servers>
+    
+    <distributed_ddl>
+        <path>/clickhouse/task_queue/ddl</path>
+        <task_max_lifetime>600</task_max_lifetime>
+    </distributed_ddl>
 </clickhouse>
