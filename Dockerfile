@@ -1,5 +1,6 @@
 FROM clickhouse/clickhouse-server:24.1.2-alpine
 
+# Install envsubst
 RUN apk add --no-cache gettext
 
 # Copy configuration files
@@ -20,10 +21,10 @@ RUN wget -O /tmp/histogram-quantile.tar.gz "https://github.com/SigNoz/signoz/rel
     && chown clickhouse:clickhouse /var/lib/clickhouse/user_scripts/histogramQuantile
 
 # Create startup script that will substitute environment variables
-RUN echo '#!/bin/sh \n\
-envsubst < /etc/clickhouse-server/config.d/cluster.xml.template > /etc/clickhouse-server/config.d/cluster.xml \n\
-exec /entrypoint.sh "$@"' > /docker-entrypoint-custom.sh && \
-chmod +x /docker-entrypoint-custom.sh
+RUN echo '#!/bin/sh' > /docker-entrypoint-custom.sh && \
+    echo 'envsubst < /etc/clickhouse-server/config.d/cluster.xml.template > /etc/clickhouse-server/config.d/cluster.xml' >> /docker-entrypoint-custom.sh && \
+    echo 'exec /entrypoint.sh "$@"' >> /docker-entrypoint-custom.sh && \
+    chmod +x /docker-entrypoint-custom.sh
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget --spider -q 0.0.0.0:8123/ping
