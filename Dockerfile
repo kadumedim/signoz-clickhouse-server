@@ -3,6 +3,9 @@ FROM clickhouse/clickhouse-server:24.1.2-alpine
 # Install envsubst
 RUN apk add --no-cache gettext
 
+# Create config directories
+RUN mkdir -p /etc/clickhouse-server/config.d/
+
 # Copy configuration files
 COPY config.xml /etc/clickhouse-server/config.xml
 COPY users.xml /etc/clickhouse-server/users.xml
@@ -26,6 +29,9 @@ RUN echo '#!/bin/sh' > /docker-entrypoint-custom.sh && \
     echo 'exec /entrypoint.sh "$@"' >> /docker-entrypoint-custom.sh && \
     chmod +x /docker-entrypoint-custom.sh
 
+# Set permissions on configuration files
+RUN chown -R clickhouse:clickhouse /etc/clickhouse-server/
+
 # Health check
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget --spider -q 0.0.0.0:8123/ping
 
@@ -33,4 +39,3 @@ HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget --spider -q 0.0.0.0
 EXPOSE 8123 9000 9009
 
 ENTRYPOINT ["/docker-entrypoint-custom.sh"]
-CMD ["clickhouse", "server"]
