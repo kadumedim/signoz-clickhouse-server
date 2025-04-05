@@ -7,7 +7,7 @@
         </node>
     </zookeeper>
 
-    <remote_servers>
+    <!-- <remote_servers>
         <cluster>
             <shard>
                 <replica>
@@ -16,7 +16,7 @@
                 </replica>
             </shard>
         </cluster>
-    </remote_servers>
+    </remote_servers> -->
     
     <distributed_ddl>
         <path>/clickhouse/task_queue/ddl</path>
