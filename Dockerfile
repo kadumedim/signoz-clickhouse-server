@@ -29,13 +29,8 @@ RUN echo '#!/bin/sh' > /docker-entrypoint-custom.sh && \
     echo 'exec /entrypoint.sh "$@"' >> /docker-entrypoint-custom.sh && \
     chmod +x /docker-entrypoint-custom.sh
 
-# Set permissions on configuration files
 RUN chown -R clickhouse:clickhouse /etc/clickhouse-server/
 
-# Health check
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 CMD wget --spider -q 0.0.0.0:8123/ping
-
-# Expose ports
-EXPOSE 8123 9000 9009
 
 ENTRYPOINT ["/docker-entrypoint-custom.sh"]
